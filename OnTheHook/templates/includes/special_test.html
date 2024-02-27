@@ -1,0 +1,58 @@
+<div class="container mt-1">
+  <div id="map" style="height: 800px;"></div>
+  <span id="id_user_region" value="{{ request.user.location }}"></span>
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=88929720-ecd9-41a2-871e-ce817fd43182&lang=ru_RU"></script>
+  <script>
+    function init() {
+      var lat = document.getElementById('id_lat').value
+      var lon = document.getElementById('id_lon').value
+      console.log(lat == "")
+      var center, region
+    
+      if (lat != "") {
+        center = [lat, lon];
+        zoom = 18;
+      } else {
+        center = [45.04344559937834,41.96065721112236];
+        zoom = 10;
+      }
+      const myMap = new ymaps.Map('map', {
+        center: center,
+        zoom: zoom,
+      })
+      const addMarkers = (dataFromServer) => {
+        const places = dataFromServer.map(item => new ymaps.Placemark(
+          [item.lat, item.lon],
+          {
+            balloonContent: '<div class="mb-1"><img src="' + item.img + '" style="width: 110px; height: auto;"></div><a class="btn btn-primary" href="/catalog/' + item.id + '">Подробнее</a>',
+            iconCaption: item.name
+          },
+          {
+            preset: 'islands#governmentCircleIcon',
+            iconColor: '#3b5998'
+          }
+        ))
+
+        for (const place of places) {
+          myMap.geoObjects.add(place)
+        }
+      }
+
+      fetch('/catalog/api/spots/')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          addMarkers(data)
+        })
+      myMap.events.add('click', function (e) {
+        var coords = e.get('coords')
+        var lat = document.getElementById('id_lat')
+        var lon = document.getElementById('id_lon')
+        lat.value = coords[0]
+        lon.value = coords[1]
+      })
+    }
+    
+    ymaps.ready(init)
+  </script>
+</div>

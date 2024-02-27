@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% block title %}<title>{{ spot_info.name }}</title>{% endblock %}
+<div class="container">
+  <div>
+    <h1 class="h1 mb-4">{{ spot_info.name }}</h1>
+    <div id="carouselExample" class="carousel slide">
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{spot_info.spot_mainimage.image.url}}" class="d-block w-100 carousel-image" alt="...">
+        </div>
+        {% for image in spot_info.spot_images.all %}
+        <div class="carousel-item">
+          <img src="{{image.image.url}}" class="d-block w-100 carousel-image" alt="...">
+        </div>
+        {% endfor %}
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <div class="py-3">
+      <div class="mb-3">
+        <p>{{ spot_info.text|safe }}</p>
+      </div>
+      <p class="h4"><a class="btn btn-primary"
+          href="https://yandex.ru/maps/?ll={{ spot_info.lon }}%2C{{ spot_info.lat }}&mode=search&sll={{ spot_info.lon }}%2C{{ spot_info.lat }}&text={{ spot_info.lat }}%2C{{ spot_info.lon }}&z=13.63">В путь</a>
+          <a class="btn btn-primary" href="/catalog/created/{{spot_info.id}}/edit/">Редактировать</a>
+      </p>
+      <p class="mb-1">Широта: <span>{{ spot_info.lat }}</span></p>
+      <p class="mb-1">Долгота: <span>{{ spot_info.lon }}</span></p>
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Форма для отзыва!
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            {% include "includes/auth_form.html" %}
+          </div>
+        </div>
+      </div>
+      <div class="py-3">
+        <p class="h4">Отчёты о рыбалке</p>
+        <div class="p-2 bg-body-tertiary mb-2 rounded-2">
+          {% for comment in users_comments %}
+            <div>
+              <h3><img src="{{comment.user.get_avatar}}" class="img-thumbnail rounded-circle avatar" alt="" height="50px" width="60px">{{comment.user.username}}</h3>
+              
+              
+            </div>
+            <p class="">{{ comment.comment }}</p>
+            <div class="row">
+              {% for image in comment.rating_images.all %}
+              <div class="col-md-3">
+                <img src="{{ image.image.url }}" class="d-block img-thumbnail gallery-img" alt="...">
+              </div>
+              {% endfor %}
+            </div>
+            <p class="fw-light">{{comment.created_at}}</p>
+            <hr>
+            {%empty%}
+            <p class="text-muted">Будь вторым, кто обуздает это место!</p>
+
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

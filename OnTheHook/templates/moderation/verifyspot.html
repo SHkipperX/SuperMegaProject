@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% load static %}
+  {% block title %}
+    <title>Проверка|{{ spot.name }}</title>
+  {% endblock %}
+  <div class="container">
+    <p>
+        {% for image in spot.spot_images.all %}
+        <img src="{{image.image.url}}" width="300px" height="300px" alt="">
+        {% endfor %}
+      </p>
+    {{spot.text|safe}}
+    <a class="btn btn-primary"
+          href="https://yandex.ru/maps/?ll={{ spot.lon }}%2C{{ spot.lat }}&mode=search&sll={{ spot.lon }}%2C{{ spot.lat }}&text={{ spot.lat }}%2C{{ spot.lon }}&z=13.63">Посмотреть на карте</a>
+
+    <form method="post" action="/moderation/verify/{{ spot.id }}/">
+      {% csrf_token %}
+
+      <div class="controls">
+        <select class="form-select" name="verify">
+          <option selected>выберете действие</option>
+          <option value="publick">Опубликовать</option>
+          <option value="denied">Отказать</option>
+          <option value="delete">Удалить</option>
+        </select>
+      </div>
+
+      <input type="submit" class="btn btn-secondary" value="Подтвердить" title="Подтвердить" />
+    </form>
+
+  </div>
+{% endblock %}

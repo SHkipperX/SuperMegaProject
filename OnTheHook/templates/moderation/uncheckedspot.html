@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% block title %}
+    <title>Модерация мест</title>
+  {% endblock %}
+  {% load static %}
+  <div class="container">
+    {% for spot in items %}
+      <div class="col-md-4 mb-4">
+        <div class="card" style="width: 18vrem;">
+          <img src="{{ spot.spot_mainimage.image.url }}" class="main-img-catalog" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">{{ spot.name }}</h5>
+            <a class="btn btn-primary" href="/moderation/verify/{{ spot.id }}/">Проверить</a>
+          </div>
+        </div>
+      </div>
+
+      {% empty %}
+      <h2>А мест то нет</h2>
+    {% endfor %}
+  </div>
+{% endblock %}

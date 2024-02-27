@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% load static %}
+{% block title %}<title>Добавленные места</title>{% endblock %}
+
+  {% for spot in spots %}
+  <div class="col-md-4 mb-4">
+    <div class="card" style="width: 18vrem;">
+      <img src="{{ spot.spot_mainimage.image.url }}" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">{{ spot.name }}</h5>
+        <p class="card-text">{{ spot.region|truncatewords_html:10|safe }}</p>
+        <a href="{% url 'catalog:edit_palce' spot.id %}" class="btn btn-primary">Редактировать</a>
+      </div>
+      {% empty %}
+      <h1>Вы пока не добавли ни одного места</h1>
+    {% endfor %}
+  </div>
+{% endblock %}

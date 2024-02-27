@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% block title %}<title>Каталог</title>{% endblock %}
+<div class="container">
+  {% if request.user.is_authenticated %}
+  <div class="row">
+    <div class="col-md-8">
+      <p class="h3">Знаешь клёвые места и готов поделиться?</p>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'catalog:create_spot'%}" class="btn btn-primary mb-4">Поделись
+        своим
+        клёвым местом</a>
+    </div>
+   </div>
+    {% endif %}
+    <form action="." method="post">
+      {% csrf_token %}
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <select class="form-select" name="region">
+            <option value="1099" selected>Выберите регион</option>
+            {% for region in regions %}
+            <option value="{{ region.id }}">{{ region.region }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <input type="submit" class="btn btn-secondary" value="Выбрать" title="Выбрать"/>
+        </div>
+      </div>
+    </form>
+
+  <div class="row">
+    {% for spot in spots %}
+    {% ifchanged spot.region %}
+    <h2 class="col-md-12 text-center mb-3">{{ spot.region }}</h2>
+    {% endifchanged %}
+    <div class="col-md-4 mb-4">
+      <div class="card" style="width: 18vrem;">
+        <img src="{{ spot.spot_mainimage.image.url }}" class="main-img-catalog" alt="..."/>
+        <div class="card-body">
+          <h5 class="card-title">{{ spot.name }}</h5>
+          <p class="card-text">{{ spot.text|truncatewords_html:5|safe }}</p>
+          <a href="{% url 'catalog:spot_detail' spot.id %}" class="btn btn-primary">Подробнее</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>Ещё нет клёвых мест:(</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

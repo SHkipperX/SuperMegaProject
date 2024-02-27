@@ -1,0 +1,66 @@
+{% load static %}
+<header class="bg-body-tertiary mb-4">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="{% static '/image/logo4.png' %}" width="150"/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          {% with request.resolver_match.view_name as view_name %}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'homepage:homepage' %}active{% endif %}"
+                 href="{% if view_name != 'homepage:homepage' %}{% url 'homepage:homepage' %}{% else %}#
+                  {% endif %}">
+                Главная
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'catalog:spot_list' %}active{% endif %}"
+                 href="{% if view_name != 'catalog:spot_list' %}
+                    {% url 'catalog:spot_list' %}{% else %}#
+                  {% endif %}">
+                Каталог
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'map:map' %}active{% endif %}"
+                 href="{% if view_name != 'map:map' %}
+                    {% url 'map:map' %}{% else %}#
+                  {% endif %}">
+                Карта
+              </a>
+            </li>
+          </ul>
+          {% endwith %}
+          <div class="d-flex">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:profile' %}">Профиль</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
+              </li>
+              {% if request.user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">Администрирование</a>
+              </li>
+              {% endif %}
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:login' %}">Вход</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

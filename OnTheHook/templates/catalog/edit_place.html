@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% block title %}<title>Редактирование</title>{% endblock %}
+<div class="container">
+  {{ form.media }}
+  {% include 'includes/spot_form.html' %}
+</div>
+{% endblock %}

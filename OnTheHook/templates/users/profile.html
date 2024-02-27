@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% load static %}
+  <title>{{model.username}}</title>
+  <img src="{{ model.get_avatar }}" alt="" class="img-thumbnail mx-auto d-block" width="400px" height="300" />
+  {% include 'includes/auth_form.html' %}
+  <p class="text-center container"><a class="btn btn-primary mb-4" href="{% url 'catalog:created_spot' %}">Ваши места</a></p>
+  <script>
+    //поиск населёного пункта. необходимо api
+    var typingTimer
+    var doneTypingInterval = 1000
+    function getValue() {
+      clearTimeout(typingTimer)
+      typingTimer = setTimeout(performSearch, doneTypingInterval)
+    }
+    
+    function performSearch() {
+      var locationInput = document.getElementById('id_location')
+      var locationValue = locationInput.value
+      console.log('Выполняем поиск для:', locationValue)
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,16 @@
+[flake8]
+max-line-length = 79
+inline-quotes = double
+docstring-quotes = double
+import-order-style = google
+application-import-names = about catalog core download feedback homepage lyceum users
+exclude =
+    .git
+    __pycache__
+    docs
+    build
+    dist
+    .venv/
+    venv
+    */migrations/*
+    FishPlaceBot/

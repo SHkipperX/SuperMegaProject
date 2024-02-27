@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% load static %}
+
+  <div class="container">
+    {% include 'includes/auth_form.html' %}
+    <div class="text-center">
+      <p>
+        <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+      </p>
+      <hr />
+      <h5>Войдите при помощи соцсети</h5>
+      <a href="/login/vk-oauth2/"><img src="/static/image/vklogo.png" style="width: 3%; height:3% ;" data-toggle="tooltip" title="Vk" /></a>
+    </div>
+  </div>
+{% endblock %}

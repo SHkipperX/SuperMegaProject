@@ -1,0 +1,13 @@
+#backports.zoneinfo==0.2.1
+Django==4.2.5
+django-cities-light==3.10.0
+django-ckeditor==6.7.0
+django-cleanup==8.0.0
+django-filter==23.5
+djangorestframework==3.14.0
+markdown==3.5.1
+Pillow==10.1.0
+python-dotenv==1.0.0
+sorl-thumbnail==12.10.0
+transliterate==1.10.2
+
