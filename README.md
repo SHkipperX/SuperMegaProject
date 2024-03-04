@@ -135,3 +135,4 @@ python manage.py runserver
 ##### Завершение работы
 
 Для остановки сервера разработки нажмите Ctrl+C в командной строке.
+> feat. EgorDikanskiy 
