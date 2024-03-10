@@ -185,23 +185,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# CITIES_LIGHT_TRANSLATION_LANGUAGES = ["ru"]
-# CITIES_LIGHT_INCLUDE_COUNTRIES = ["RU"]
-# CITIES_LIGHT_INCLUDE_CITY_TYPES = [
-#     "PPL",
-#     "PPLA",
-#     "PPLA2",
-#     "PPLA3",
-#     "PPLA4",
-#     "PPLC",
-#     "PPLF",
-#     "PPLG",
-#     "PPLL",
-#     "PPLR",
-#     "PPLS",
-#     "STLMT",
-# ]
-
 CKEDITOR_JQUERY_URL = (
     "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
 )
