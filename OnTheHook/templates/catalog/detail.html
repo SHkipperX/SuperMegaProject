@@ -32,16 +32,17 @@
         <p>{{ spot_info.text|safe }}</p>
       </div>
       <p class="h4"><a class="btn btn-primary"
-          href="https://yandex.ru/maps/?ll={{ spot_info.lon }}%2C{{ spot_info.lat }}&mode=search&sll={{ spot_info.lon }}%2C{{ spot_info.lat }}&text={{ spot_info.lat }}%2C{{ spot_info.lon }}&z=13.63">В путь</a>
-          <a class="btn btn-primary" href="/catalog/created/{{spot_info.id}}/edit/">Редактировать</a>
+          href="https://yandex.ru/maps/?ll={{ spot_info.lon }}%2C{{ spot_info.lat }}&mode=search&sll={{ spot_info.lon }}%2C{{ spot_info.lat }}&text={{ spot_info.lat }}%2C{{ spot_info.lon }}&z=13.63">В
+          путь</a>
       </p>
       <p class="mb-1">Широта: <span>{{ spot_info.lat }}</span></p>
       <p class="mb-1">Долгота: <span>{{ spot_info.lon }}</span></p>
+      {% if request.user.is_authenticated %}
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
               Форма для отзыва!
             </button>
           </h2>
@@ -50,27 +51,29 @@
           </div>
         </div>
       </div>
+      {%endif%}
       <div class="py-3">
         <p class="h4">Отчёты о рыбалке</p>
         <div class="p-2 bg-body-tertiary mb-2 rounded-2">
           {% for comment in users_comments %}
-            <div>
-              <h3><img src="{{comment.user.get_avatar}}" class="img-thumbnail rounded-circle avatar" alt="" height="50px" width="60px">{{comment.user.username}}</h3>
-              
-              
+          <div>
+            <h3><img src="{{comment.user.get_avatar}}" class="img-thumbnail rounded-circle avatar" alt="" height="50px"
+                width="60px">{{comment.user.username}}</h3>
+
+
+          </div>
+          <p class="">{{ comment.comment }}</p>
+          <div class="row">
+            {% for image in comment.rating_images.all %}
+            <div class="col-md-3">
+              <img src="{{ image.image.url }}" class="d-block img-thumbnail gallery-img" alt="...">
             </div>
-            <p class="">{{ comment.comment }}</p>
-            <div class="row">
-              {% for image in comment.rating_images.all %}
-              <div class="col-md-3">
-                <img src="{{ image.image.url }}" class="d-block img-thumbnail gallery-img" alt="...">
-              </div>
-              {% endfor %}
-            </div>
-            <p class="fw-light">{{comment.created_at}}</p>
-            <hr>
-            {%empty%}
-            <p class="text-muted">Будь вторым, кто обуздает это место!</p>
+            {% endfor %}
+          </div>
+          <p class="fw-light">{{comment.created_at}}</p>
+          <hr>
+          {%empty%}
+          <p class="text-muted">Будь вторым, кто обуздает это место!</p>
 
           {% endfor %}
         </div>
